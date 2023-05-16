@@ -1,4 +1,5 @@
-let { StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } = require('discord.js');
+let moment = require('moment');
+let { StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports.stringSelectMenuSubmit = async (interaction) => {
 	try {

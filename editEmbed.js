@@ -1,6 +1,6 @@
-var moment = require('moment');
-var dbCmds = require('./dbCmds.js');
-var { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+let moment = require('moment');
+let dbCmds = require('./dbCmds.js');
+let { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
 module.exports.editMainEmbed = async (client) => {
 	try {

@@ -1,9 +1,9 @@
 require('discord.js');
 let moment = require('moment');
-var dbCmds = require('./dbCmds.js');
+let dbCmds = require('./dbCmds.js');
 let postEmbed = require('./postEmbed.js');
 let editEmbed = require('./editEmbed.js');
-var { EmbedBuilder } = require('discord.js');
+let { EmbedBuilder } = require('discord.js');
 
 module.exports.startUp = async (client) => {
 	try {
