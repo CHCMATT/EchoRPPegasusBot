@@ -74,8 +74,9 @@ module.exports.modalSubmit = async (interaction) => {
 							{ name: `Flight Date:`, value: `${flightDate}` },
 							{ name: `Departing From:`, value: `${departureLoc}`, inline: true },
 							{ name: `Destination:`, value: `${destinationLoc}`, inline: true },
-							{ name: `Aircraft Type:`, value: `${aircraftType}` },
-							{ name: `Souls on Board:`, value: `${soulsCount}` },
+							{ name: `Flight Purpose:`, value: `${flightPurpose}` },
+							{ name: `Aircraft Type:`, value: `${aircraftType}`, inline: true },
+							{ name: `Souls on Board:`, value: `${soulsCount}`, inline: true },
 						)
 						.setColor('740000');
 
