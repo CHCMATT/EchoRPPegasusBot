@@ -73,5 +73,5 @@ client.once('ready', async () => {
 	let now = Math.floor(new Date().getTime() / 1000.0);
 	let time = `<t:${now}:t>`;
 
-	await client.channels.cache.get(process.env.LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${time}.`)
+	await client.channels.cache.get(process.env.BOT_LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${time}.`)
 });

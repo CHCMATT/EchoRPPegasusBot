@@ -21,8 +21,8 @@ module.exports.btnPressed = async (interaction) => {
 					.setStyle(TextInputStyle.Short)
 					.setPlaceholder('Sandy Shores Airfield')
 					.setRequired(true);
-				let purpose = new TextInputBuilder()
-					.setCustomId('purposeInput')
+				let flightPurpose = new TextInputBuilder()
+					.setCustomId('flightPurposeInput')
 					.setLabel("What is the purpose of this flight?")
 					.setStyle(TextInputStyle.Short)
 					.setPlaceholder('Recreational')
@@ -42,11 +42,11 @@ module.exports.btnPressed = async (interaction) => {
 
 				let departureLocRow = new ActionRowBuilder().addComponents(departureLoc);
 				let destinationLocRow = new ActionRowBuilder().addComponents(destinationLoc);
-				let purposeRow = new ActionRowBuilder().addComponents(purpose);
+				let flightPurposeRow = new ActionRowBuilder().addComponents(flightPurpose);
 				let aircraftTypeRow = new ActionRowBuilder().addComponents(aircraftType);
 				let soulsCountRow = new ActionRowBuilder().addComponents(soulsCount);
 
-				newFlightPlanModal.addComponents(departureLocRow, destinationLocRow, purposeRow, aircraftTypeRow, soulsCountRow);
+				newFlightPlanModal.addComponents(departureLocRow, destinationLocRow, flightPurposeRow, aircraftTypeRow, soulsCountRow);
 
 				await interaction.showModal(newFlightPlanModal);
 				break;
