@@ -33,7 +33,7 @@ module.exports.modalSubmit = async (interaction) => {
 			case 'newFlightPlanModal':
 				let pilotName;
 				let pilotCallsign;
-				if (interaction.member.nickname && interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
+				if (interaction.member.nickname && interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
 					discordNick = interaction.member.nickname
 					pilotCallsign = discordNick.substring((discordNick.indexOf(`[`) + 1), discordNick.indexOf(`]`));
 					pilotName = discordNick.substring((discordNick.indexOf(`]`) + 2));
