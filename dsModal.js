@@ -47,10 +47,10 @@ module.exports.modalSubmit = async (interaction) => {
 					var aircraftType = toTitleCase(strCleanup(interaction.fields.getTextInputValue('aircraftTypeInput')));
 					var soulsCount = strCleanup(interaction.fields.getTextInputValue('soulsCountInput'));
 
-					if (departureLoc == "Lsia" || departureLoc == "Ssa" || departureLoc == "Ss") {
+					if (departureLoc == "Lsia" || departureLoc == "Ssa" || departureLoc == "Ss" || departureLoc == "Gs" || departureLoc == "Gsa" || departureLoc == "Cp" || departureLoc == "Cpa") {
 						departureLoc = departureLoc.toUpperCase();
 					}
-					if (destinationLoc == "Lsia" || destinationLoc == "Ssa" || destinationLoc == "Ss") {
+					if (destinationLoc == "Lsia" || destinationLoc == "Ssa" || destinationLoc == "Ss" || destinationLoc == "Gsa" || destinationLoc == "Gs" || destinationLoc == "Cp" || destinationLoc == "Cpa") {
 						destinationLoc = destinationLoc.toUpperCase();
 					}
 
