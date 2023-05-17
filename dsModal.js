@@ -1,13 +1,5 @@
 let moment = require('moment');
-let dbCmds = require('./dbCmds.js');
-let editEmbed = require('./editEmbed.js');
-let { EmbedBuilder } = require('discord.js');
-
-let formatter = new Intl.NumberFormat('en-US', {
-	style: 'currency',
-	currency: 'USD',
-	maximumFractionDigits: 0
-});
+let { EmbedBuilder, time, quote, userMention, roleMention } = require('discord.js');
 
 function toTitleCase(str) {
 	str = str.toLowerCase().split(' ');
@@ -38,8 +30,8 @@ module.exports.modalSubmit = async (interaction) => {
 					pilotCallsign = discordNick.substring((discordNick.indexOf(`[`) + 1), discordNick.indexOf(`]`));
 					pilotName = discordNick.substring((discordNick.indexOf(`]`) + 2));
 
-					let now = Math.floor(new Date().getTime() / 1000.0);
-					let flightDate = `<t:${now}:d>`;
+					let today = new Date();
+					let flightDate = time(today, 'd');
 
 					var departureLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('departureLocInput')));
 					var destinationLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('destinationLocInput')));
@@ -86,13 +78,13 @@ module.exports.modalSubmit = async (interaction) => {
 					let usableCommand = `/311 [ATC] Pegasus Airlines | Aircraft: ${aircraftType} | Departure: ${departureLoc} | Arrival: ${destinationLoc} | Radio 919.1 | Callsign: ${pilotCallsign}`
 
 					await interaction.reply({
-						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n> ${usableCommand}`,
+						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n${quote(usableCommand)}`,
 						ephemeral: true
 					});
 
 				} else {
 					await interaction.reply({
-						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ATC Admin team, <@198291969741422592>, or <@572556642982559764> to assist.`,
+						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
 						ephemeral: true
 					});
 				}

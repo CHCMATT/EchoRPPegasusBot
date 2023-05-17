@@ -1,6 +1,6 @@
 let moment = require('moment');
 let startup = require('../startup.js');
-let { PermissionsBitField, EmbedBuilder } = require('discord.js');
+let { PermissionsBitField, EmbedBuilder, channelMention } = require('discord.js');
 
 module.exports = {
 	name: 'startup',
@@ -9,7 +9,7 @@ module.exports = {
 		try {
 			if (interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
 				const postOrEdit = await startup.startUp(interaction.client);
-				await interaction.reply({ content: `Successfully ${postOrEdit} the embed to the <#${process.env.EMBED_CHANNEL_ID}> channel.`, ephemeral: true });
+				await interaction.reply({ content: `Successfully ${postOrEdit} the embed to the ${channelMention(process.env.EMBED_CHANNEL_ID)} channel.`, ephemeral: true });
 			}
 			else {
 				await interaction.reply({ content: `:x: You must have the \`Administrator\` permission to use this function.`, ephemeral: true });

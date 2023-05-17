@@ -4,7 +4,7 @@ let mongoose = require("mongoose");
 let startup = require('./startup.js');
 let { google } = require('googleapis');
 let interact = require('./dsInteractions.js');
-let { Client, Collection, GatewayIntentBits } = require('discord.js');
+let { Client, Collection, GatewayIntentBits, time } = require('discord.js');
 
 let client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
@@ -70,8 +70,8 @@ client.once('ready', async () => {
 
 	await startup.startUp(client);
 
-	let now = Math.floor(new Date().getTime() / 1000.0);
-	let time = `<t:${now}:t>`;
+	let today = new Date();
+	let nowTime = time(today, 't');
 
-	await client.channels.cache.get(process.env.BOT_LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${time}.`)
+	await client.channels.cache.get(process.env.BOT_LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${nowTime}.`)
 });
