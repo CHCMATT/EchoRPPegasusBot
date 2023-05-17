@@ -85,7 +85,7 @@ module.exports.modalSubmit = async (interaction) => {
 					let usableCommand = `/311 [ATC] Pegasus Airlines | Aircraft: ${aircraftType} | Departure: ${departureLoc} | Arrival: ${destinationLoc} | Radio 919.1 | Callsign: ${pilotCallsign}`
 
 					await interaction.reply({
-						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:> ${usableCommand}`,
+						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n> ${usableCommand}`,
 						ephemeral: true
 					});
 
