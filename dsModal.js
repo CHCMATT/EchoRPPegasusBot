@@ -23,6 +23,7 @@ module.exports.modalSubmit = async (interaction) => {
 		let modalID = interaction.customId;
 		switch (modalID) {
 			case 'newFlightPlanModal':
+				console.log(`Started processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 				let pilotName;
 				let pilotCallsign;
 				if (interaction.member.nickname && interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
@@ -88,7 +89,7 @@ module.exports.modalSubmit = async (interaction) => {
 						ephemeral: true
 					});
 				}
-
+				console.log(`Finished processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 				break;
 			default:
 				await interaction.reply({
@@ -98,7 +99,7 @@ module.exports.modalSubmit = async (interaction) => {
 				console.log(`Error: Unrecognized modal ID: ${interaction.customId}`);
 		}
 	} catch (error) {
-		let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
+		let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');
 		let fileParts = __filename.split(/[\\/]/);
 		let fileName = fileParts[fileParts.length - 1];
 
