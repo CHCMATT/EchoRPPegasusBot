@@ -34,11 +34,11 @@ module.exports.modalSubmit = async (interaction) => {
 					let today = new Date();
 					let flightDate = time(today, 'd');
 
-					var departureLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('departureLocInput')));
-					var destinationLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('destinationLocInput')));
-					var flightPurpose = toSentenceCase(strCleanup(interaction.fields.getTextInputValue('flightPurposeInput')));
-					var aircraftType = toTitleCase(strCleanup(interaction.fields.getTextInputValue('aircraftTypeInput')));
-					var soulsCount = strCleanup(interaction.fields.getTextInputValue('soulsCountInput'));
+					let departureLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('departureLocInput')));
+					let destinationLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('destinationLocInput')));
+					let flightPurpose = toSentenceCase(strCleanup(interaction.fields.getTextInputValue('flightPurposeInput')));
+					let aircraftType = toTitleCase(strCleanup(interaction.fields.getTextInputValue('aircraftTypeInput')));
+					let soulsCount = strCleanup(interaction.fields.getTextInputValue('soulsCountInput'));
 
 					if (departureLoc == "Lsia" || departureLoc == "Ssa" || departureLoc == "Ss" || departureLoc == "Gs" || departureLoc == "Gsa" || departureLoc == "Cp" || departureLoc == "Cpa" || departureLoc == "Saf") {
 						departureLoc = departureLoc.toUpperCase();
@@ -59,7 +59,7 @@ module.exports.modalSubmit = async (interaction) => {
 						return;
 					}
 
-					var flightPlanEmbed = new EmbedBuilder()
+					let flightPlanEmbed = new EmbedBuilder()
 						.setTitle('A new Flight Plan has been registered!')
 						.addFields(
 							{ name: `Pilot Name:`, value: `${pilotName}`, inline: true },
