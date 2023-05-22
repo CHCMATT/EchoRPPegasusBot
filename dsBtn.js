@@ -50,7 +50,7 @@ module.exports.btnPressed = async (interaction) => {
 
 				await interaction.showModal(newFlightPlanModal);
 
-				console.log(`Registered button push for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+				console.log(`Registered button push for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 				break;
 			default:

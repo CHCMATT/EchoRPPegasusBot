@@ -23,7 +23,7 @@ module.exports.modalSubmit = async (interaction) => {
 		let modalID = interaction.customId;
 		switch (modalID) {
 			case 'newFlightPlanModal':
-				console.log(`Started processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+				console.log(`Started processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				let pilotName;
 				let pilotCallsign;
 				if (interaction.member.nickname && interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
@@ -75,18 +75,18 @@ module.exports.modalSubmit = async (interaction) => {
 
 					await interaction.client.channels.cache.get(process.env.FLIGHT_LOG_CHANNEL_ID).send({ embeds: [flightPlanEmbed] });
 
-					console.log(`Sent flightPlanEmbed for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+					console.log(`Sent flightPlanEmbed for flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					let usableCommand = `/311 [ATC] Pegasus Airlines | Aircraft: ${aircraftType} | Departure: ${departureLoc} | Arrival: ${destinationLoc} | Radio 919.1 | Callsign: ${pilotCallsign}`
 
-					console.log(`Set usableCommand for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+					console.log(`Set usableCommand for flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					await interaction.reply({
 						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n${quote(usableCommand)}`,
 						ephemeral: true
 					});
 
-					console.log(`Finished processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+					console.log(`Finished processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				} else {
 					await interaction.reply({
 						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
