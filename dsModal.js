@@ -86,7 +86,7 @@ module.exports.modalSubmit = async (interaction) => {
 						ephemeral: true
 					});
 
-					console.log(`Sent ephemeral reply for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
+					console.log(`Finished processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 				} else {
 					await interaction.reply({
 						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
