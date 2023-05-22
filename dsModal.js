@@ -51,7 +51,7 @@ module.exports.modalSubmit = async (interaction) => {
 						auth: interaction.client.auth, spreadsheetId: interaction.client.sheetId, range: "Flight Plans!A:H", valueInputOption: "RAW", resource: { values: [[pilotCallsign, pilotName, flightDate, departureLoc, destinationLoc, flightPurpose, aircraftType, soulsCount]] }
 					});
 
-					if (isNaN(soulsCount)) { // validate quantity of money
+					if (isNaN(soulsCount)) { // validate quantity of souls on board
 						await interaction.reply({
 							content: `:exclamation: \`${interaction.fields.getTextInputValue('soulsCountInput')}\` is not a valid number, please be sure to only enter numbers.`,
 							ephemeral: true
@@ -75,21 +75,24 @@ module.exports.modalSubmit = async (interaction) => {
 
 					await interaction.client.channels.cache.get(process.env.FLIGHT_LOG_CHANNEL_ID).send({ embeds: [flightPlanEmbed] });
 
+					console.log(`Sent flightPlanEmbed for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 
 					let usableCommand = `/311 [ATC] Pegasus Airlines | Aircraft: ${aircraftType} | Departure: ${departureLoc} | Arrival: ${destinationLoc} | Radio 919.1 | Callsign: ${pilotCallsign}`
+
+					console.log(`Set usableCommand for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 
 					await interaction.reply({
 						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n${quote(usableCommand)}`,
 						ephemeral: true
 					});
 
+					console.log(`Sent ephemeral reply for flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 				} else {
 					await interaction.reply({
 						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
 						ephemeral: true
 					});
 				}
-				console.log(`Finished processing flight plan for ${interaction.member.nickname} at ${moment().format('MMMM Do YYYY, h:mm:ss a')}`);
 				break;
 			default:
 				await interaction.reply({
