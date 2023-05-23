@@ -23,6 +23,7 @@ module.exports.modalSubmit = async (interaction) => {
 		let modalID = interaction.customId;
 		switch (modalID) {
 			case 'newFlightPlanModal':
+				await interaction.deferReply();
 				console.log(`Started processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				let pilotName;
 				let pilotCallsign;
@@ -62,7 +63,7 @@ module.exports.modalSubmit = async (interaction) => {
 					console.log(`Sent data to Google Sheet for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					if (isNaN(soulsCount)) { // validate quantity of souls on board
-						await interaction.reply({
+						await interaction.editReply({
 							content: `:exclamation: \`${interaction.fields.getTextInputValue('soulsCountInput')}\` is not a valid number, please be sure to only enter numbers.`,
 							ephemeral: true
 						});
@@ -95,14 +96,14 @@ module.exports.modalSubmit = async (interaction) => {
 
 					console.log(`Set usableCommand for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
-					await interaction.reply({
+					await interaction.editReply({
 						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n${quote(usableCommand)}`,
 						ephemeral: true
 					});
 
 					console.log(`Finished processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				} else {
-					await interaction.reply({
+					await interaction.editReply({
 						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
 						ephemeral: true
 					});
