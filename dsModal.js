@@ -23,7 +23,7 @@ module.exports.modalSubmit = async (interaction) => {
 		let modalID = interaction.customId;
 		switch (modalID) {
 			case 'newFlightPlanModal':
-				await interaction.deferReply();
+				await interaction.deferReply({ ephemeral: true });
 				console.log(`Started processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				let pilotName;
 				let pilotCallsign;
