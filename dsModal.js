@@ -24,20 +24,15 @@ module.exports.modalSubmit = async (interaction) => {
 		switch (modalID) {
 			case 'newFlightPlanModal':
 				await interaction.deferReply({ ephemeral: true });
-				console.log(`Started processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				let pilotName;
 				let pilotCallsign;
 				if (interaction.member.nickname && interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
-					console.log(`Found proper nickname for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 					discordNick = interaction.member.nickname
 					pilotCallsign = discordNick.substring((discordNick.indexOf(`[`) + 1), discordNick.indexOf(`]`));
 					pilotName = discordNick.substring((discordNick.indexOf(`]`) + 2));
-					console.log(`Set pilotCallsign and pilotName for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					let today = new Date();
 					let flightDate = time(today, 'd');
-
-					console.log(`Set flightDate for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					let departureLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('departureLocInput')));
 					let destinationLoc = toTitleCase(strCleanup(interaction.fields.getTextInputValue('destinationLocInput')));
@@ -45,29 +40,22 @@ module.exports.modalSubmit = async (interaction) => {
 					let aircraftType = toTitleCase(strCleanup(interaction.fields.getTextInputValue('aircraftTypeInput')));
 					let soulsCount = strCleanup(interaction.fields.getTextInputValue('soulsCountInput'));
 
-					console.log(`Found inputs for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
-
 					if (departureLoc == "Lsia" || departureLoc == "Ssa" || departureLoc == "Ss" || departureLoc == "Gs" || departureLoc == "Gsa" || departureLoc == "Cp" || departureLoc == "Cpa" || departureLoc == "Saf") {
 						departureLoc = departureLoc.toUpperCase();
-						console.log(`Capitalized departureLoc for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 					}
 					if (destinationLoc == "Lsia" || destinationLoc == "Ssa" || destinationLoc == "Ss" || destinationLoc == "Gsa" || destinationLoc == "Gs" || destinationLoc == "Cp" || destinationLoc == "Cpa" || destinationLoc == "Saf") {
 						destinationLoc = destinationLoc.toUpperCase();
-						console.log(`Capitalized destinationLoc for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 					}
 
 					await interaction.client.googleSheets.values.append({
 						auth: interaction.client.auth, spreadsheetId: interaction.client.sheetId, range: "Flight Plans!A:H", valueInputOption: "RAW", resource: { values: [[pilotCallsign, pilotName, flightDate, departureLoc, destinationLoc, flightPurpose, aircraftType, soulsCount]] }
 					});
 
-					console.log(`Sent data to Google Sheet for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
-
 					if (isNaN(soulsCount)) { // validate quantity of souls on board
 						await interaction.editReply({
 							content: `:exclamation: \`${interaction.fields.getTextInputValue('soulsCountInput')}\` is not a valid number, please be sure to only enter numbers.`,
 							ephemeral: true
 						});
-						console.log(`Sent ephemeral reply due to soulsCount NaN for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 						return;
 					}
 
@@ -85,23 +73,15 @@ module.exports.modalSubmit = async (interaction) => {
 						)
 						.setColor('740000');
 
-					console.log(`Set flightPlanEmbed for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
-
-
 					await interaction.client.channels.cache.get(process.env.FLIGHT_LOG_CHANNEL_ID).send({ embeds: [flightPlanEmbed] });
 
-					console.log(`Sent flightPlanEmbed for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
-
 					let usableCommand = `/311 [ATC] Pegasus Airlines | Aircraft: ${aircraftType} | Departure: ${departureLoc} | Arrival: ${destinationLoc} | Radio 919.1 | Callsign: ${pilotCallsign}`
-
-					console.log(`Set usableCommand for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 
 					await interaction.editReply({
 						content: `Successfully registered your flight!\n\nYour relevant 311 call details are below:\n${quote(usableCommand)}`,
 						ephemeral: true
 					});
 
-					console.log(`Finished processing flight plan for ${interaction.member.nickname} at `.padEnd(66, ' ') + moment().format('h:mm:ss:SSS a'));
 				} else {
 					await interaction.editReply({
 						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
