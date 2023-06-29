@@ -25,20 +25,24 @@ module.exports = (client) => {
 				return;
 			}
 		} catch (error) {
-			let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
-			let fileParts = __filename.split(/[\\/]/);
-			let fileName = fileParts[fileParts.length - 1];
+			if (process.env.BOT_NAME == 'test') {
+				console.error(error);
+			} else {
+				let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
+				let fileParts = __filename.split(/[\\/]/);
+				let fileName = fileParts[fileParts.length - 1];
 
-			let errorEmbed = [new EmbedBuilder()
-				.setTitle(`An error occured on the ${process.env.BOT_NAME} bot file ${fileName}!`)
-				.setDescription(`\`\`\`${error.toString().slice(0, 2000)}\`\`\``)
-				.setColor('B80600')
-				.setFooter({ text: `${errTime}` })];
+				let errorEmbed = [new EmbedBuilder()
+					.setTitle(`An error occured on the ${process.env.BOT_NAME} bot file ${fileName}!`)
+					.setDescription(`\`\`\`${error.toString().slice(0, 2000)}\`\`\``)
+					.setColor('B80600')
+					.setFooter({ text: `${errTime}` })];
 
-			await interaction.client.channels.cache.get(process.env.ERROR_LOG_CHANNEL_ID).send({ embeds: errorEmbed });
+				await interaction.client.channels.cache.get(process.env.ERROR_LOG_CHANNEL_ID).send({ embeds: errorEmbed });
 
-			console.log(`Error occured at ${errTime} at file ${fileName}!`);
-			console.error(error);
+				console.log(`Error occured at ${errTime} at file ${fileName}!`);
+				console.error(error);
+			}
 		}
 	});
 };
