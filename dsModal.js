@@ -59,6 +59,14 @@ module.exports.modalSubmit = async (interaction) => {
 						return;
 					}
 
+					if (!pilotName) {
+						await interaction.editReply({
+							content: `Unable to determine your name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
+							ephemeral: true
+						});
+						return;
+					}
+
 					let flightPlanEmbed = new EmbedBuilder()
 						.setTitle('A new Flight Plan has been registered!')
 						.addFields(
@@ -84,7 +92,7 @@ module.exports.modalSubmit = async (interaction) => {
 
 				} else {
 					await interaction.editReply({
-						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(`1106468091266863114`)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
+						content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, ${userMention(`198291969741422592`)}, or ${userMention(`572556642982559764`)} to assist.`,
 						ephemeral: true
 					});
 				}
