@@ -40,10 +40,10 @@ module.exports.modalSubmit = async (interaction) => {
 					let aircraftType = toTitleCase(strCleanup(interaction.fields.getTextInputValue('aircraftTypeInput')));
 					let soulsCount = strCleanup(interaction.fields.getTextInputValue('soulsCountInput'));
 
-					if (departureLoc == "Lsia" || departureLoc == "Ssa" || departureLoc == "Ss" || departureLoc == "Gs" || departureLoc == "Gsa" || departureLoc == "Cp" || departureLoc == "Cpa" || departureLoc == "Saf" || departureLoc == "Tbd") {
+					if (departureLoc.length <= 4) {
 						departureLoc = departureLoc.toUpperCase();
 					}
-					if (destinationLoc == "Lsia" || destinationLoc == "Ssa" || destinationLoc == "Ss" || destinationLoc == "Gsa" || destinationLoc == "Gs" || destinationLoc == "Cp" || destinationLoc == "Cpa" || destinationLoc == "Saf" || destinationLoc == "Tbd") {
+					if (destinationLoc.length <= 4) {
 						destinationLoc = destinationLoc.toUpperCase();
 					}
 
