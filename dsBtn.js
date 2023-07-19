@@ -59,7 +59,10 @@ module.exports.btnPressed = async (interaction) => {
 		if (process.env.BOT_NAME == 'test') {
 			console.error(error);
 		} else {
-			let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+			console.log(`Error occured at ${errTime} at file ${fileName}!`);
+			console.error(error);
+
+			let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
 			let fileParts = __filename.split(/[\\/]/);
 			let fileName = fileParts[fileParts.length - 1];
 
@@ -70,9 +73,6 @@ module.exports.btnPressed = async (interaction) => {
 				.setFooter({ text: `${errTime}` })];
 
 			await interaction.client.channels.cache.get(process.env.ERROR_LOG_CHANNEL_ID).send({ embeds: errorEmbed });
-
-			console.log(`Error occured at ${errTime} at file ${fileName}!`);
-			console.error(error);
 		}
 	}
 };
