@@ -15,24 +15,21 @@ module.exports = {
 				await interaction.reply({ content: `:x: You must have the \`Administrator\` permission to use this function.`, ephemeral: true });
 			}
 		} catch (error) {
-			if (process.env.BOT_NAME == 'test') {
-				console.error(error);
-			} else {
-				console.log(`Error occured at ${errTime} at file ${fileName}!`);
-				console.error(error);
+			console.error(error);
 
-				let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
-				let fileParts = __filename.split(/[\\/]/);
-				let fileName = fileParts[fileParts.length - 1];
+			let errTime = moment().format('MMMM Do YYYY, h:mm:ss a');;
+			let fileParts = __filename.split(/[\\/]/);
+			let fileName = fileParts[fileParts.length - 1];
 
-				let errorEmbed = [new EmbedBuilder()
-					.setTitle(`An error occured on the ${process.env.BOT_NAME} bot file ${fileName}!`)
-					.setDescription(`\`\`\`${error.toString().slice(0, 2000)}\`\`\``)
-					.setColor('B80600')
-					.setFooter({ text: `${errTime}` })];
+			console.log(`Error occured at ${errTime} at file ${fileName}!`);
 
-				await interaction.client.channels.cache.get(process.env.ERROR_LOG_CHANNEL_ID).send({ embeds: errorEmbed });
-			}
+			let errorEmbed = [new EmbedBuilder()
+				.setTitle(`An error occured on the ${process.env.BOT_NAME} bot file ${fileName}!`)
+				.setDescription(`\`\`\`${error.toString().slice(0, 2000)}\`\`\``)
+				.setColor('B80600')
+				.setFooter({ text: `${errTime}` })];
+
+			await interaction.client.channels.cache.get(process.env.ERROR_LOG_CHANNEL_ID).send({ embeds: errorEmbed });
 		}
 	}
 };
