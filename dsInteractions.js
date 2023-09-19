@@ -1,7 +1,6 @@
 let moment = require('moment');
 let dsBtn = require('./dsBtn.js');
 let dsModal = require('./dsModal.js');
-let dsStringSelectMenu = require('./dsStringSelectMenu.js');
 let { EmbedBuilder } = require('discord.js');
 
 module.exports = (client) => {
@@ -15,9 +14,6 @@ module.exports = (client) => {
 			}
 			else if (interaction.isModalSubmit()) {
 				await dsModal.modalSubmit(interaction);
-			}
-			else if (interaction.isStringSelectMenu()) {
-				await dsStringSelectMenu.stringSelectMenuSubmit(interaction);
 			}
 			else {
 				await interaction.reply({ content: `I'm not familiar with this interaction. Please tag @CHCMATT to fix this issue.`, ephemeral: true });

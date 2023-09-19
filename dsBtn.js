@@ -1,55 +1,70 @@
 let moment = require('moment');
-let { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } = require('discord.js');
+let { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, userMention, roleMention } = require('discord.js');
 
 module.exports.btnPressed = async (interaction) => {
 	try {
 		let buttonID = interaction.customId;
 		switch (buttonID) {
 			case 'newFlightPlan':
-				let newFlightPlanModal = new ModalBuilder()
-					.setCustomId('newFlightPlanModal')
-					.setTitle('Log a new Flight Plan');
-				let departureLoc = new TextInputBuilder()
-					.setCustomId('departureLocInput')
-					.setLabel("What is your departure location?")
-					.setStyle(TextInputStyle.Short)
-					.setPlaceholder('Los Santos International Airport')
-					.setRequired(true);
-				let destinationLoc = new TextInputBuilder()
-					.setCustomId('destinationLocInput')
-					.setLabel("What is your destination location?")
-					.setStyle(TextInputStyle.Short)
-					.setPlaceholder('Sandy Shores Airfield')
-					.setRequired(true);
-				let flightPurpose = new TextInputBuilder()
-					.setCustomId('flightPurposeInput')
-					.setLabel("What is the purpose of this flight?")
-					.setStyle(TextInputStyle.Short)
-					.setPlaceholder('Recreational')
-					.setRequired(true);
-				let aircraftType = new TextInputBuilder()
-					.setCustomId('aircraftTypeInput')
-					.setLabel("What type of aircraft are you flying?")
-					.setStyle(TextInputStyle.Short)
-					.setPlaceholder('Maverick')
-					.setRequired(true);
-				let soulsCount = new TextInputBuilder()
-					.setCustomId('soulsCountInput')
-					.setLabel("How many souls do you have on board?")
-					.setStyle(TextInputStyle.Short)
-					.setPlaceholder('3')
-					.setRequired(true);
+				if (!Object.is(interaction.member.nickname, null)) {
+					if (interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
 
-				let departureLocRow = new ActionRowBuilder().addComponents(departureLoc);
-				let destinationLocRow = new ActionRowBuilder().addComponents(destinationLoc);
-				let flightPurposeRow = new ActionRowBuilder().addComponents(flightPurpose);
-				let aircraftTypeRow = new ActionRowBuilder().addComponents(aircraftType);
-				let soulsCountRow = new ActionRowBuilder().addComponents(soulsCount);
+						let newFlightPlanModal = new ModalBuilder()
+							.setCustomId('newFlightPlanModal')
+							.setTitle('Log a new Flight Plan');
+						let departureLoc = new TextInputBuilder()
+							.setCustomId('departureLocInput')
+							.setLabel("What is your departure location?")
+							.setStyle(TextInputStyle.Short)
+							.setPlaceholder('Los Santos International Airport')
+							.setRequired(true);
+						let destinationLoc = new TextInputBuilder()
+							.setCustomId('destinationLocInput')
+							.setLabel("What is your destination location?")
+							.setStyle(TextInputStyle.Short)
+							.setPlaceholder('Sandy Shores Airfield')
+							.setRequired(true);
+						let flightPurpose = new TextInputBuilder()
+							.setCustomId('flightPurposeInput')
+							.setLabel("What is the purpose of this flight?")
+							.setStyle(TextInputStyle.Short)
+							.setPlaceholder('Recreational')
+							.setRequired(true);
+						let aircraftType = new TextInputBuilder()
+							.setCustomId('aircraftTypeInput')
+							.setLabel("What type of aircraft are you flying?")
+							.setStyle(TextInputStyle.Short)
+							.setPlaceholder('Maverick')
+							.setRequired(true);
+						let soulsCount = new TextInputBuilder()
+							.setCustomId('soulsCountInput')
+							.setLabel("How many souls do you have on board?")
+							.setStyle(TextInputStyle.Short)
+							.setPlaceholder('3')
+							.setRequired(true);
 
-				newFlightPlanModal.addComponents(departureLocRow, destinationLocRow, flightPurposeRow, aircraftTypeRow, soulsCountRow);
+						let departureLocRow = new ActionRowBuilder().addComponents(departureLoc);
+						let destinationLocRow = new ActionRowBuilder().addComponents(destinationLoc);
+						let flightPurposeRow = new ActionRowBuilder().addComponents(flightPurpose);
+						let aircraftTypeRow = new ActionRowBuilder().addComponents(aircraftType);
+						let soulsCountRow = new ActionRowBuilder().addComponents(soulsCount);
 
-				await interaction.showModal(newFlightPlanModal);
+						newFlightPlanModal.addComponents(departureLocRow, destinationLocRow, flightPurposeRow, aircraftTypeRow, soulsCountRow);
 
+						await interaction.showModal(newFlightPlanModal);
+
+					} else {
+						await interaction.reply({
+							content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+							ephemeral: true
+						});
+					}
+				} else {
+					await interaction.reply({
+						content: `:exclamation: You don't have a nickname in this Discord. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+						ephemeral: true
+					});
+				}
 				break;
 			default:
 				await interaction.reply({ content: `I'm not familiar with this button press. Please tag @CHCMATT to fix this issue.`, ephemeral: true });
