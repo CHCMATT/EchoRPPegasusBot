@@ -25,7 +25,7 @@ module.exports.modalSubmit = async (interaction) => {
 			case 'newFlightPlanModal':
 				await interaction.deferReply({ ephemeral: true });
 				if (!Object.is(interaction.member.nickname, null)) {
-					if (interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
+					if (interaction.member.nickname.includes(`[R-`) || interaction.member.nickname.includes(`[F-`) || interaction.member.nickname.includes(`[D-`) || interaction.member.nickname.includes(`[T-`) && interaction.member.nickname.includes(`]`)) {
 						let pilotName;
 						let pilotCallsign;
 						discordNick = interaction.member.nickname

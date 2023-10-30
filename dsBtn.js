@@ -7,7 +7,7 @@ module.exports.btnPressed = async (interaction) => {
 		switch (buttonID) {
 			case 'newFlightPlan':
 				if (!Object.is(interaction.member.nickname, null)) {
-					if (interaction.member.nickname.includes(`[T-`) || interaction.member.nickname.includes(`[D-`) && interaction.member.nickname.includes(`]`)) {
+					if (interaction.member.nickname.includes(`[R-`) || interaction.member.nickname.includes(`[F-`) || interaction.member.nickname.includes(`[D-`) || interaction.member.nickname.includes(`[T-`) && interaction.member.nickname.includes(`]`)) {
 
 						let newFlightPlanModal = new ModalBuilder()
 							.setCustomId('newFlightPlanModal')
