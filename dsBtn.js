@@ -54,10 +54,19 @@ module.exports.btnPressed = async (interaction) => {
 						await interaction.showModal(newFlightPlanModal);
 
 					} else {
-						await interaction.reply({
-							content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
-							ephemeral: true
-						});
+						if (interaction.member._roles.includes(process.env.DUAL_CHARS_ROLE_ID)) {
+							await interaction.reply({
+								content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please ensure your name is in the follow format:\n> [callsign] Firstname Lastname\n\nIf you need help, please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+								ephemeral: true
+							});
+							return;
+						} else {
+							await interaction.reply({
+								content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+								ephemeral: true
+							});
+							return;
+						}
 					}
 				} else {
 					await interaction.reply({

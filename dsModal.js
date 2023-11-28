@@ -20,10 +20,11 @@ function strCleanup(str) {
 
 module.exports.modalSubmit = async (interaction) => {
 	try {
+		await interaction.deferReply({ ephemeral: true });
+
 		let modalID = interaction.customId;
 		switch (modalID) {
 			case 'newFlightPlanModal':
-				await interaction.deferReply({ ephemeral: true });
 				if (!Object.is(interaction.member.nickname, null)) {
 					if (interaction.member.nickname.includes(`[R-`) || interaction.member.nickname.includes(`[F-`) || interaction.member.nickname.includes(`[D-`) || interaction.member.nickname.includes(`[T-`) && interaction.member.nickname.includes(`]`)) {
 						let pilotName;
@@ -61,11 +62,19 @@ module.exports.modalSubmit = async (interaction) => {
 						}
 
 						if (!pilotName) {
-							await interaction.editReply({
-								content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
-								ephemeral: true
-							});
-							return;
+							if (interaction.member._roles.includes(process.env.DUAL_CHARS_ROLE_ID)) {
+								await interaction.editReply({
+									content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please ensure your nickname is in the follow format:\n> [callsign] Firstname Lastname\n\nIf you need help, please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+									ephemeral: true
+								});
+								return;
+							} else {
+								await interaction.editReply({
+									content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+									ephemeral: true
+								});
+								return;
+							}
 						}
 
 						let flightPlanEmbed = new EmbedBuilder()
@@ -92,20 +101,29 @@ module.exports.modalSubmit = async (interaction) => {
 						});
 
 					} else {
-						await interaction.reply({
-							content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
-							ephemeral: true
-						});
+						if (interaction.member._roles.includes(process.env.DUAL_CHARS_ROLE_ID)) {
+							await interaction.editReply({
+								content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please ensure your nickname is in the follow format:\n> [callsign] Firstname Lastname\n\nIf you need help, please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+								ephemeral: true
+							});
+							return;
+						} else {
+							await interaction.editReply({
+								content: `:exclamation: Unable to determine your callsign and name from your current Discord nickname. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
+								ephemeral: true
+							});
+							return;
+						}
 					}
 				} else {
-					await interaction.reply({
+					await interaction.editReply({
 						content: `:exclamation: You don't have a nickname in this Discord. Please tag the ${roleMention(process.env.NICKNAME_FIX_ROLE_ID)} role, or ${userMention(`572556642982559764`)} directly to assist.`,
 						ephemeral: true
 					});
 				}
 				break;
 			default:
-				await interaction.reply({
+				await interaction.editReply({
 					content: `I'm not familiar with this modal type. Please tag @CHCMATT to fix this issue.`,
 					ephemeral: true
 				});
