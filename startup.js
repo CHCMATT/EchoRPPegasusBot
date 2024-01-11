@@ -11,7 +11,7 @@ module.exports.startUp = async (client) => {
 		await mainChannel.messages.fetch(mainEmbed);
 		editEmbed.editMainEmbed(client);
 		return "edited";
-	} catch (error) {
+	} catch {
 		postEmbed.postMainEmbed(client);
 		return "posted";
 	}
