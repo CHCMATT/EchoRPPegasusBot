@@ -34,21 +34,13 @@ module.exports.postMainEmbed = async (client) => {
 			let errString = error.toString();
 			let errHandled = false;
 
-			if (errString === 'Error: The service is currently unavailable.' || errString === 'Error: Internal error encountered.' || errString === 'HTTPError: Service Unavailable') {
-				try {
-					await interaction.editReply({ content: `:warning: One of the service providers we use had a brief outage. Please try to submit your request again!`, ephemeral: true });
-				} catch {
-					await interaction.reply({ content: `:warning: One of the service providers we use had a brief outage. Please try to submit your request again!`, ephemeral: true });
-				}
-				errHandled = true;
-			}
-
 			let errorEmbed = [new EmbedBuilder()
 				.setTitle(`An error occured on the ${process.env.BOT_NAME} bot file ${fileName}!`)
 				.setDescription(`\`\`\`${errString}\`\`\``)
 				.addFields(
 					{ name: `Created by:`, value: `${interaction.member.nickname} (<@${interaction.user.id}>)`, inline: true },
 					{ name: `Error handled?`, value: `${errHandled}`, inline: true },
+					{ name: `Server name:`, value: `${interaction.member.guild.name}`, inline: true },
 				)
 				.setColor('B80600')
 				.setFooter({ text: `${errTime}` })];
